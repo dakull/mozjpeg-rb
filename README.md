@@ -1,6 +1,10 @@
 # mozjpeg-rb
 Simple script to optimize jpegs using mozjpeg
 
+### Requirements
+
+This requires the [mozjpeg](https://github.com/mozilla/mozjpeg) binaries in your path. On macOS you can just use `brew install mozjpeg`
+
 ### How to use
 
 ```shell
