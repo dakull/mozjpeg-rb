@@ -28,10 +28,22 @@ files_to_convert.each do |file_name|
   # Remove BMP
   `rm #{file_base_name}_temp.bmp`
 
-  puts "* optimized: #{file_name}"
-  saved_size = (File.size(file_name) - File.size("opt/#{file_base_name}.jpg")) / 1024
-  total_saved_size += saved_size
-  puts "- saved: #{saved_size} KB"
+  # If it cannot be optimized remove the image
+  original_size = File.size(file_name)
+  new_size = File.size("opt/#{file_base_name}.jpg")
+  saved = original_size - new_size
+
+  if saved > 0
+    puts "* optimized: #{file_name}"
+    saved_size = (File.size(file_name) - File.size("opt/#{file_base_name}.jpg")) / 1024
+    total_saved_size += saved_size
+    puts "- saved: #{saved_size} KB"
+  else
+    # Remove file
+    `rm opt/#{file_base_name}.jpg`
+    puts "* skipped: #{file_name}"
+    puts "- saved: 0 KB"
+  end
 end
 
 puts "** Total saved: #{total_saved_size} KB"
